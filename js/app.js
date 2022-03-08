@@ -53,6 +53,8 @@ function addMealCheckbox() {
         idAttr.value = recipe.id;
         inputElement.setAttributeNode(idAttr);
 
+        inputElement.classList.toggle("hiddenCheckBox2");
+
         const newContent = document.createTextNode(recipe.name);
         inputElement.appendChild(newContent)
 
