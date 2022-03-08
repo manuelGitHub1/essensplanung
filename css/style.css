@@ -42,18 +42,6 @@ h1 {
     margin: 20px 0;
 }
 
-.box {
-    height: 150px;
-    width: 150px;
-    border: solid 3px #ccc;
-    margin: 10px;
-    /* align items in the box */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
 .meal {
     border-radius: 25px;
     border: 2px solid #73AD21;
@@ -74,6 +62,26 @@ h1 {
     padding: 20px;
     width: 200px;
     height: 150px;
+}
+
+.plainDiv {
+    justify-content: space-around;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: nowrap;
+    vertical-align: middle;
+    border-radius: 25px;
+    border: 1px solid #000000;
+    padding: 20px;
+    width: 150px;
+    height: 100px;
+}
+
+.redBorder {
+    border: 4px solid #e02932;
 }
 
 .hide {

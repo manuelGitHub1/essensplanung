@@ -6,26 +6,6 @@ const ingredientsMap = new Map();
 //document.body.onload = addElement;
 document.body.onload = addMealCheckbox;
 
-
-function addRecipesOptions() {
-
-    const parent = document.querySelectorAll('.day');
-
-    parent.forEach(dropDown => {
-        recipesJson.forEach(recipe => {
-
-            var child = document.createElement('option');
-
-            const newContent = document.createTextNode(recipe.name);
-            child.appendChild(newContent);
-            dropDown.appendChild(child);
-        });
-    });
-
-
-
-}
-
 function addMealCheckbox() {
 
     const parent = document.getElementById('anchor');
@@ -39,7 +19,7 @@ function addMealCheckbox() {
         var container = document.createElement('div');
 
         var classAttr = document.createAttribute("class");
-        classAttr.value = "container";
+        classAttr.value = "plainDiv";
         container.setAttributeNode(classAttr);
 
 
@@ -83,11 +63,6 @@ function addMealCheckbox() {
         container.appendChild(labelElement);
         parent.appendChild(container);
 
-
-
-
-
-
         parent.appendChild(document.createElement('br'));
     });
 
@@ -108,17 +83,25 @@ function change(e) {
 
     const id = e.target.id;
 
+    const nearestDiv = e.target.closest("div");
+    nearestDiv.classList.toggle("redBorder");
+
+
+
     const ingredients = recipesJson[id].ingredients;
     ingredients.forEach(ingredient => {
 
 
+
         if (isChecked) {
+
             if (ingredientsMap.has(ingredient.name)) {
                 const value = ingredientsMap.get(ingredient.name);
                 ingredientsMap.set(ingredient.name, value + ingredient.amount);
             } else {
                 ingredientsMap.set(ingredient.name, ingredient.amount);
             }
+
         } else {
             const value = ingredientsMap.get(ingredient.name);
             const result = value - ingredient.amount;
@@ -132,20 +115,10 @@ function change(e) {
 
     });
 
-    print();
+    writeToHtml();
 }
 
-/* drop targets */
-const boxes = document.querySelectorAll('.box');
-
-boxes.forEach(box => {
-    box.addEventListener('dragenter', dragEnter)
-    box.addEventListener('dragover', dragOver);
-    box.addEventListener('dragleave', dragLeave);
-    box.addEventListener('drop', drop);
-});
-
-function print() {
+function writeToHtml() {
     const parent = document.getElementById('ingredients');
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
