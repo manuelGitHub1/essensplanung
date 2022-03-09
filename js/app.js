@@ -1,7 +1,7 @@
-// https:/ / html2canvas.hertzen.com / dist / html2canvas.js
-
 const recipes = '[{"id":0,"name":"Gulasch","ingredients":[{"name":"Karoffeln","amount":200,"unit":"gram"},{"name":"Zwiebeln","amount":1,"unit":"pieces"},{"name":"Pilze","amount":100,"unit":"gram"},{"name":"Rindfleisch","amount":400,"unit":"gram"}]},{"id":1,"name":"Linsengemüse","ingredients":[{"name":"Linsen","amount":500,"unit":"gram"},{"name":"Zwiebeln","amount":1,"unit":"pieces"},{"name":"Lauch","amount":100,"unit":"gram"}]},{"id":2,"name":"Gemüseauflauf","ingredients":[{"name":"Karoffeln","amount":200,"unit":"gram"},{"name":"Lauch","amount":100,"unit":"gram"}]},{"id":3,"name":"Curry","ingredients":[{"name":"Karoffeln","amount":100,"unit":"gram"},{"name":"Lauch","amount":100,"unit":"gram"},{"name":"Kokosmilch","amount":1,"unit":"pieces"},{"name":"Hähnchen","amount":250,"unit":"gram"},{"name":"Paprika","amount":2,"unit":"pieces"}]}]';
 const recipesJson = JSON.parse(recipes);
+
+const weekDays = ['Montag', 'Dienstag', 'Mittwoch'].reverse();
 
 const ingredientsMap = new Map();
 
@@ -109,6 +109,17 @@ function change(e) {
     const nearestDiv = e.target.closest("div");
     nearestDiv.classList.toggle("redBorder");
 
+    if(isChecked) {
+        const newDiv = document.createElement("div");
+        const newDivClass = document.createAttribute("class");
+        newDivClass.value = "weekday";
+        newDiv.setAttributeNode(newDivClass);
+        newDiv.appendChild(document.createTextNode(weekDays.pop()));
+        nearestDiv.appendChild(newDiv);
+    } else {
+        console.log(document.querySelector(".weekday").closest('div'));
+        // console.log(nearestDiv.closest(".weekday"));
+    }
 
 
     const ingredients = recipesJson[id].ingredients;
@@ -117,6 +128,9 @@ function change(e) {
 
 
         if (isChecked) {
+            // console.log(weekDays.pop());
+            
+            
 
             if (ingredientsMap.has(ingredient.name)) {
                 const value = ingredientsMap.get(ingredient.name);
