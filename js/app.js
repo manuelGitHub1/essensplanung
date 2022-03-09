@@ -1,10 +1,14 @@
-const recipes = '[{"id":0,"name":"Gulasch","ingredients":[{"name":"Karoffeln","amount":200,"unit":"gram"},{"name":"Zwiebeln","amount":1,"unit":"pieces"},{"name":"Pilze","amount":100,"unit":"gram"}]},{"id":1,"name":"Linsengemüse","ingredients":[{"name":"Linsen","amount":500,"unit":"gram"}]},{"id":2,"name":"Gemüseauflauf","ingredients":[{"name":"Karoffeln","amount":200,"unit":"gram"},{"name":"Lauch","amount":100,"unit":"gram"}]}]';
+// https:/ / html2canvas.hertzen.com / dist / html2canvas.js
+
+const recipes = '[{"id":0,"name":"Gulasch","ingredients":[{"name":"Karoffeln","amount":200,"unit":"gram"},{"name":"Zwiebeln","amount":1,"unit":"pieces"},{"name":"Pilze","amount":100,"unit":"gram"},{"name":"Rindfleisch","amount":400,"unit":"gram"}]},{"id":1,"name":"Linsengemüse","ingredients":[{"name":"Linsen","amount":500,"unit":"gram"},{"name":"Zwiebeln","amount":1,"unit":"pieces"},{"name":"Lauch","amount":100,"unit":"gram"}]},{"id":2,"name":"Gemüseauflauf","ingredients":[{"name":"Karoffeln","amount":200,"unit":"gram"},{"name":"Lauch","amount":100,"unit":"gram"}]},{"id":3,"name":"Curry","ingredients":[{"name":"Karoffeln","amount":100,"unit":"gram"},{"name":"Lauch","amount":100,"unit":"gram"},{"name":"Kokosmilch","amount":1,"unit":"pieces"},{"name":"Hähnchen","amount":250,"unit":"gram"},{"name":"Paprika","amount":2,"unit":"pieces"}]}]';
 const recipesJson = JSON.parse(recipes);
 
 const ingredientsMap = new Map();
 
 //document.body.onload = addElement;
 document.body.onload = addMealCheckbox;
+
+
 
 function addMealCheckbox() {
 
@@ -71,6 +75,23 @@ function addMealCheckbox() {
 
 
 
+}
+
+function captureScreen(e) {
+    const screenshotTarget = document.body;
+
+    html2canvas(screenshotTarget).then(canvas => {
+        var canvasImg = canvas.toDataURL("image/jpg");
+        const img = document.createElement("img");
+        const srcAttr = document.createAttribute("src");
+        srcAttr.value = canvasImg;
+        img.setAttributeNode(srcAttr);
+        document.getElementById("ingredients").appendChild(img);
+
+
+        // target
+        // $('#canvas').html(' <img src = "' + canvasImg + '"alt = "" > ');
+    });
 }
 
 // const selectElement = document.getElementById('anchor');
