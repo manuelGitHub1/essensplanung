@@ -14,15 +14,11 @@ function addMealCheckbox() {
 
     const parent = document.getElementById('anchor');
 
-    // <input type="checkbox" id="coding" name="interest" value="coding" checked>
-    // <label for="coding">Coding</label>
-
-
     recipesJson.forEach(recipe => {
 
-        var container = document.createElement('div');
+        const container = document.createElement('div');
 
-        var classAttr = document.createAttribute("class");
+        const classAttr = document.createAttribute("class");
         classAttr.value = "plainDiv";
         container.setAttributeNode(classAttr);
 
@@ -45,7 +41,7 @@ function addMealCheckbox() {
         // classAttr.value = "meal2";
         // child.setAttributeNode(classAttr);
 
-        var typeAttr = document.createAttribute("type");
+        const typeAttr = document.createAttribute("type");
         typeAttr.value = "checkbox";
         inputElement.setAttributeNode(typeAttr);
 
@@ -57,17 +53,26 @@ function addMealCheckbox() {
         idAttr.value = recipe.id;
         inputElement.setAttributeNode(idAttr);
 
-        inputElement.classList.toggle("hiddenCheckBox2");
+        inputElement.classList.toggle("hiddenCheckBox");
 
         const newContent = document.createTextNode(recipe.name);
         inputElement.appendChild(newContent)
 
+
+        // const container2 = document.createElement('div');
+
+        // const classAttr2 = document.createAttribute("class");
+        // classAttr2.value = "nextToDiv-" + recipe.id;
+        // container2.setAttributeNode(classAttr);
 
 
         // build the DOM
         labelElement.appendChild(inputElement);
         container.appendChild(labelElement);
         parent.appendChild(container);
+        // parent.appendChild(container2);
+
+
 
         parent.appendChild(document.createElement('br'));
     });
@@ -108,17 +113,42 @@ function change(e) {
 
     const nearestDiv = e.target.closest("div");
     nearestDiv.classList.toggle("redBorder");
+    const allWeekDays = document.querySelectorAll(".weekday");
 
-    if(isChecked) {
+    if (isChecked) {
         const newDiv = document.createElement("div");
+
         const newDivClass = document.createAttribute("class");
         newDivClass.value = "weekday";
         newDiv.setAttributeNode(newDivClass);
-        newDiv.appendChild(document.createTextNode(weekDays.pop()));
+
+        newDiv.appendChild(document.createTextNode(allWeekDays.length + 1));
+
+        // const idAttr = document.createAttribute("id");
+        // idAttr.value = "recipe" + ;
+        // newDiv.setAttributeNode(idAttr);
+
+        const newDataAttr = document.createAttribute("data-plan");
+        newDataAttr.value = newDiv.textContent;
+        e.target.setAttributeNode(newDataAttr);
+
+        // const closestLabel = e.target.closest("label");
+        // const oldContent =  closestLabel.textContent; 
+        // closestLabel.textContent = newDiv.textContent + oldContent;
+
         nearestDiv.appendChild(newDiv);
     } else {
-        console.log(document.querySelector(".weekday").closest('div'));
+        console.log(e.target.dataset.plan);
+        const planToDelete = e.target.dataset.plan;
+        document.querySelectorAll(".weekday").forEach(element => {
+            if (element.textContent == planToDelete) {
+                element.remove();
+            }
+        });
         // console.log(nearestDiv.closest(".weekday"));
+
+
+
     }
 
 
@@ -128,10 +158,6 @@ function change(e) {
 
 
         if (isChecked) {
-            // console.log(weekDays.pop());
-            
-            
-
             if (ingredientsMap.has(ingredient.name)) {
                 const value = ingredientsMap.get(ingredient.name);
                 ingredientsMap.set(ingredient.name, value + ingredient.amount);
@@ -160,7 +186,7 @@ function writeToHtml() {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
     }
-    ingredientsMap.forEach(function(value, key) {
+    ingredientsMap.forEach(function (value, key) {
 
         var child = document.createElement('div');
         const newContent = document.createTextNode(key + " = " + value);
